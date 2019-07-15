@@ -19,8 +19,20 @@ class Cifrado{
         }
     }
 
-    function codifica(){
+    private function codificaCesar($nombre){
+        $nombreCodificado="";
+        //Recorro todo el string
+        for ($i=0; $i < strlen($nombre) ; $i++) { 
+            $letra=substr($nombre, $i, 1);
+            $pos = array_search($letra, $this->alfabetoBase);
+            $nombreCodificado=$nombreCodificado.$this->alfabetoCesar[$pos];
+        }
+        return $nombreCodificado;
+    }
+
+    function codifica($nombre){
         $this->crearAlfabeto(3);
+        $nombreCodificado=$this->codificaCesar(strtoupper($nombre));
     }
 
     function getAlfabetoOriginal(){
