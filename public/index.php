@@ -5,6 +5,7 @@ use Geeks\codec\Cifrado as Cifrado;
 //Objeto cifrado
 $c=new Cifrado();
 $nombreCodificado=$c->codifica("Rachid");
+setcookie("Nombre", "Rachid");
 ?>
 <!DOCTYPE html>
 <html>
@@ -22,11 +23,12 @@ $nombreCodificado=$c->codifica("Rachid");
   <h1 class="codificado"><?=$nombreCodificado?></h1>
   </div>
   <div class="content formulario">
-    <form action="">
+    <form action="index2.php" method="post">
       <div class="form-group">
         <label for="exampleInputEmail1">Introduce solucion</label>
-        <input type="text" class="form-control" id="exampleInputSol" aria-describedby="solHelp" placeholder="Solucion">
+        <input type="text" name="solucion" class="form-control" id="exampleInputSol" aria-describedby="solHelp" placeholder="Solucion">
         <small id="solHelp" class="form-text text-muted">REsuleve el nombre</small>
+        <input type="hidden" name="cifrado" value="<?=$nombreCodificado?>">
       </div>
       <button type="submit" class="btn btn-primary">RESOLVER</button>
     </form>
