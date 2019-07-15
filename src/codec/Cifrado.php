@@ -5,6 +5,10 @@ class Cifrado{
     private $alfabetoBase=null;
     private $alfabetoCesar=null;
 
+    function __construct(){
+        
+    }
+
     private function crearAlfabeto($desplaza){
         //Alfabeto de la A a la Z
         for ($i=65; $i < 91 ; $i++) { 
@@ -33,6 +37,7 @@ class Cifrado{
     function codifica($nombre){
         $this->crearAlfabeto(3);
         $nombreCodificado=$this->codificaCesar(strtoupper($nombre));
+        return $nombreCodificado;
     }
 
     function getAlfabetoOriginal(){
