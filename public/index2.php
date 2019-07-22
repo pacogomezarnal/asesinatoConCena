@@ -1,6 +1,21 @@
 <?php
 require_once __DIR__.'/../vendor/autoload.php';
 use Geeks\codec\Cifrado as Cifrado;
+
+
+if(isset($_POST)){
+  print_r($_POST);
+  if(!isset($_POST["solucion"])||!isset($_POST["cifrado"])){
+    header('Location: index.php?error=Falta campo');
+  }else{
+    if(strlen($_POST["solucion"])==0||strlen($_POST["cifrado"])==0) header('Location: index.php?error=La solucion esta vacia');
+    //Objeto cifrado
+    $c=new Cifrado();
+    $nombreCodificado=$c->codifica($_POST["solucion"]);
+    if($nombreCodificado==$_POST["cifrado"]){
+    }
+  }
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -14,10 +29,7 @@ use Geeks\codec\Cifrado as Cifrado;
   include __DIR__.'/../vistas/menu.php';
   ?>
   <div class="content">
-  <?php
-  var_dump($_POST);
-  var_dump($_COOKIE);
-  ?>
+
   </div>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

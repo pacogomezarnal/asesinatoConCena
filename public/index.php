@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__.'/../vendor/autoload.php';
 use Geeks\codec\Cifrado as Cifrado;
-
 //Objeto cifrado
 $c=new Cifrado();
 $nombreCodificado=$c->codifica("Rachid");
@@ -26,9 +25,18 @@ setcookie("Nombre", "Rachid");
     <form action="index2.php" method="post">
       <div class="form-group">
         <label for="exampleInputEmail1">Introduce solucion</label>
-        <input type="text" name="solucion" class="form-control" id="exampleInputSol" aria-describedby="solHelp" placeholder="Solucion">
-        <small id="solHelp" class="form-text text-muted">REsuleve el nombre</small>
+        <input type="text" name="solucion" class="form-control" id="exampleInputSol" aria-describedby="solHelp">
+        <small id="solHelp" class="form-text text-muted">Resuleve el nombre</small>
         <input type="hidden" name="cifrado" value="<?=$nombreCodificado?>">
+        <?php
+          if(isset($_GET["error"])){
+        ?>
+        <div class="alert alert-danger" role="alert">
+          <?=$_GET["error"]?>
+        </div>
+        <?php
+          }
+        ?>
       </div>
       <button type="submit" class="btn btn-primary">RESOLVER</button>
     </form>
