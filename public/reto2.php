@@ -6,9 +6,9 @@ use Geeks\codec\Cifrado as Cifrado;
 if(isset($_POST)){
   print_r($_POST);
   if(!isset($_POST["solucion"])||!isset($_POST["cifrado"])){
-    header('Location: index.php?error=Falta campo');
+    header('Location: reto1.php?error=Falta campo');
   }else{
-    if(strlen($_POST["solucion"])==0||strlen($_POST["cifrado"])==0) header('Location: index.php?error=La solucion esta vacia');
+    if(strlen($_POST["solucion"])==0||strlen($_POST["cifrado"])==0) header('Location: reto1.php?error=La solucion esta vacia');
     //Objeto cifrado
     $c=new Cifrado();
     $nombreCodificado=$c->codifica($_POST["solucion"]);
