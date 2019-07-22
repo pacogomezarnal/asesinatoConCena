@@ -13,16 +13,19 @@ require_once __DIR__.'/../vendor/autoload.php';
                 $error="Las contraseñas no coinciden";
             }else{
                 //Realizar la insercion a la DB
-                $conexion = new mysqli("loscalhost", "root", "", "cena");
-                if ($mysqli->connect_errno) {
-                    $error="Fallo al conectar a MySQL: " . $mysqli->connect_error;
+                $conexion = new mysqli("localhost", "root", "", "cena");
+                if ( $conexion->connect_errno) {
+                    $error="Fallo al conectar a MySQL: " . $conexion->connect_error;
                 }else{
-
+                    $salt="CursoPHPConPakuchi";
+                    $passCodificado=crypt($_POST["pass1"],$salt);
+                    $sql="INSERT INTO usuario (email, pass, role)
+                    VALUES ('".$_POST["email"]."',' $passCodificado', 'USER')";
+                    $resultado = $conexion->query($sql);
+                    if($resultado==false) $error="Fallo en la insercion";
                 }
             }
         }
-        //Datos recibidos de Formulario
-        print_r($_POST);
     }
 ?>
 <!DOCTYPE html>
