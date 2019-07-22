@@ -13,6 +13,12 @@ require_once __DIR__.'/../vendor/autoload.php';
                 $error="Las contraseñas no coinciden";
             }else{
                 //Realizar la insercion a la DB
+                $conexion = new mysqli("loscalhost", "root", "", "cena");
+                if ($mysqli->connect_errno) {
+                    $error="Fallo al conectar a MySQL: " . $mysqli->connect_error;
+                }else{
+
+                }
             }
         }
         //Datos recibidos de Formulario
