@@ -1,3 +1,38 @@
+<?php
+require_once __DIR__.'/../vendor/autoload.php';
+    $error=null;
+    if(isset($_POST["action"])){
+        if(!isset($_POST["email"])||!isset($_POST["pass1"])){
+            $error="Faltan campos";
+        }else{
+            if(strlen($_POST["email"])==0){
+                $error="Falta el email";
+            }elseif(strlen($_POST["pass1"])==0){
+                $error="Falta password";
+            }else{
+                //Realizar la comprobacion a la DB
+                $conexion = new mysqli("localhost", "root", "", "cena");
+                if ( $conexion->connect_errno) {
+                    $error="Fallo al conectar a MySQL: " . $conexion->connect_error;
+                }else{
+                    $salt="CursoPHPConPakuchi";
+                    $passCodificado=crypt($_POST["pass1"],$salt);
+                    $sql="SELECT * FROM usuario WHERE email='".$_POST["email"]."' AND pass =' $passCodificado'";
+                    $resultado = $conexion->query($sql);
+                    if($resultado!=false){
+                      if($resultado->num_rows>0){
+                        $error="El usuario esta logado";
+                      }else{
+                        $error="El usuario no existe";
+                      }
+                    }else{
+                      $error="Fallo en el resultado";
+                    }
+            }
+          }
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -12,6 +47,36 @@
 <?php
   include __DIR__.'/../vistas/menu.php';
 ?>
+<div class="content">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col">
+        <form action="index.php" method="post">
+        <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+            <label for="pass1">Contraseña</label>
+            <input type="password" class="form-control" name="pass1" id="pass1" placeholder="Password">
+        </div>
+        <?php
+          if($error!=null){
+        ?>
+        <div class="alert alert-danger" role="alert">
+          <?=$error?>
+        </div>
+        <?php
+          }
+        ?>
+        <input type="hidden" name="action" value="registrar">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        </div>
+        <div class="col"></div>
+    </div>
+</div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>    
